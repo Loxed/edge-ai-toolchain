@@ -7,15 +7,22 @@ def train_mlp(
     epochs: int = 1000,
     learning_rate: float = 0.1,
     momentum: float = 0.9,
-) -> None:
+) -> dict[str, list[float]]:
     velocity_input_hidden = [[0.0] * model.n_inputs for _ in range(model.n_hidden)]
     velocity_bias_hidden = [0.0] * model.n_hidden
     velocity_hidden_output = [[0.0] * model.n_hidden for _ in range(model.n_outputs)]
     velocity_bias_output = [0.0] * model.n_outputs
 
+    history: dict[str, list[float]] = {"loss": []}
+
     for _ in range(epochs):
+        epoch_loss = 0.0
+
         for x, target in dataset:
-            hidden, output = model.forward(x)
+            output = model.forward(x)
+            hidden = model.last_hidden_activations
+
+            epoch_loss += sum((target - output[o]) ** 2 for o in range(model.n_outputs))
 
             output_deltas = [
                 (target - output[o]) * sigmoid_derivative(output[o])
@@ -56,3 +63,7 @@ def train_mlp(
                     momentum * velocity_bias_hidden[h] + learning_rate * hidden_deltas[h]
                 )
                 model.bias_hidden[h] += velocity_bias_hidden[h]
+
+        history["loss"].append(epoch_loss / len(dataset))
+
+    return history

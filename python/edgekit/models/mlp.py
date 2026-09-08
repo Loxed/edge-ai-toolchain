@@ -31,7 +31,10 @@ class MLP:
         ]
         self.bias_output = [0.0] * n_outputs
 
-    def forward(self, x: list[float]) -> tuple[list[float], list[float]]:
+        # populated by forward(); read by train_mlp for backpropagation
+        self.last_hidden_activations: list[float] = []
+
+    def forward(self, x: list[float]) -> list[float]:
         hidden = [
             sigmoid(
                 sum(w * xi for w, xi in zip(self.weights_input_hidden[h], x))
@@ -48,8 +51,10 @@ class MLP:
             for o in range(self.n_outputs)
         ]
 
-        return hidden, output
+        self.last_hidden_activations = hidden
+
+        return output
 
     def predict(self, x: list[float]) -> int:
-        _, output = self.forward(x)
+        output = self.forward(x)
         return int(output[0] > 0.5)
