@@ -1,1 +1,51 @@
+# existing entry
 edge-ai-toolchain_dump.md
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+build/
+dist/
+*.egg
+
+# virtual envs
+.venv/
+venv/
+env/
+
+# test / lint / type-check caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# downloaded datasets (torchvision MNIST cache, etc.)
+data/MNIST/
+data/mnist/
+data/*.gz
+data/*.idx*
+
+# training artifacts
+runs/
+checkpoints/
+*.pt
+*.pth
+
+# exported / compressed models
+*.onnx
+*.tflite
+*.bin
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/
+.idea/
