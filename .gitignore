@@ -49,3 +49,6 @@ Thumbs.db
 # editor
 .vscode/
 .idea/
+
+# Notebook
+*.Zone.Identifier
