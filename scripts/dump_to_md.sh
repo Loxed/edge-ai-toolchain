@@ -35,6 +35,11 @@ DEFAULT_EXCLUDE_DIRS=(".venv" "venv" "env" "__pycache__" ".git"
 DEFAULT_EXCLUDE_FILES=("package-lock.json" "yarn.lock" "pnpm-lock.yaml"
                        "Cargo.lock" "poetry.lock" "*.min.js" "*.min.css")
 
+# Filenames that are skipped from the dump when they contain no real content
+# (blank, or only whitespace/comments). They still stay on disk and in git,
+# they're just not worth the tokens in the dump.
+SKIP_IF_EMPTY_FILENAMES=("__init__.py")
+
 FOLDERS=()
 EXTENSIONS=()
 SINCE=false
@@ -146,6 +151,19 @@ find "$ROOT" -type f | sort | while read -r file; do
     # Skip this script and the output file
     [[ "$file" == "$0" ]] && continue
     [[ "$file" == "$OUT" ]] && continue
+
+    # Skip files that are empty (or whitespace/comments-only) when their
+    # filename is in SKIP_IF_EMPTY_FILENAMES. The file stays tracked in git,
+    # it's just left out of the dump since it carries no information.
+    for name in "${SKIP_IF_EMPTY_FILENAMES[@]}"; do
+        if [[ "$filename" == "$name" ]]; then
+            content="$(grep -v '^[[:space:]]*#' "$file" | tr -d '[:space:]')"
+            if [[ -z "$content" ]]; then
+                echo "  - Skipping empty $rel"
+                continue 2
+            fi
+        fi
+    done
 
     # If --since, skip files not in the changed list
     if $SINCE; then
