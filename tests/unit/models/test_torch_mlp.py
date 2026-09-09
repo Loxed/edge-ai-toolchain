@@ -1,6 +1,6 @@
 import torch
 
-from edgekit.models.torch_mlp import TorchMLP
+from edgekit.models.torch_mlp_xor import TorchMLP
 
 
 def test_mlp_output_shape():
