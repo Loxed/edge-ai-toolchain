@@ -89,7 +89,7 @@ def _(LogicGatesDataset, MLP, sample_noisy_points, train_mlp):
 
     model = MLP(n_inputs=2, n_hidden=4, n_outputs=1, seed=42)
 
-    history = train_mlp(model, xor_dataset, epochs=1000, learning_rate=0.5)
+    history = train_mlp(model, xor_dataset, epochs=2000, learning_rate=0.1)
 
     predictions = [model.predict(x) for x, _ in xor_dataset]
     expected = [y for _, y in xor_dataset]
