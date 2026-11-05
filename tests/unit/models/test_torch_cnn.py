@@ -1,6 +1,6 @@
 import torch
 
-from edgekit.models.torch_cnn import TorchCNN
+from edgekit.models.torch_cnn_mnist import TorchCNN
 
 
 def test_cnn_output_shape():

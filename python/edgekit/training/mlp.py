@@ -1,3 +1,5 @@
+import random
+
 from edgekit.models.mlp import MLP, sigmoid_derivative
 
 
@@ -7,7 +9,13 @@ def train_mlp(
     epochs: int = 1000,
     learning_rate: float = 0.1,
     momentum: float = 0.9,
+    shuffle: bool = True,
+    seed: int = 0,
 ) -> dict[str, list[float]]:
+    # Les echantillons arrivent souvent groupes par classe : sans melange, la SGD
+    # avec momentum oscille d'une classe a l'autre et ne converge pas.
+    samples = list(dataset)
+    rng = random.Random(seed)
     velocity_input_hidden = [[0.0] * model.n_inputs for _ in range(model.n_hidden)]
     velocity_bias_hidden = [0.0] * model.n_hidden
     velocity_hidden_output = [[0.0] * model.n_hidden for _ in range(model.n_outputs)]
@@ -18,7 +26,10 @@ def train_mlp(
     for _ in range(epochs):
         epoch_loss = 0.0
 
-        for x, target in dataset:
+        if shuffle:
+            rng.shuffle(samples)
+
+        for x, target in samples:
             output = model.forward(x)
             hidden = model.last_hidden_activations
 
@@ -64,6 +75,6 @@ def train_mlp(
                 )
                 model.bias_hidden[h] += velocity_bias_hidden[h]
 
-        history["loss"].append(epoch_loss / len(dataset))
+        history["loss"].append(epoch_loss / len(samples))
 
     return history

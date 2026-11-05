@@ -8,6 +8,9 @@ version = "0.1.0"
 requires-python = ">=3.11"
 dependencies = ["torch", "torchvision", "matplotlib", "marimo"]
 
+[project.optional-dependencies]
+dev = ["pytest", "numpy", "scipy", "onnx", "onnxruntime", "onnxscript", "scikit-learn", "pyarrow", "pyserial"]
+
 [tool.setuptools.packages.find]
 where = ["python"]
 
