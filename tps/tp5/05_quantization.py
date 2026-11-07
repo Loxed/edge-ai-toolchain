@@ -17,7 +17,7 @@ def _(mo):
     # 05 : quantification int8, PTQ et QAT (TP 5)
 
     Point de départ : le MobileNetV2 fine-tuné du TP 4 (`models/cifar4_mobilenetv2.pt`). Si le fichier
-    n'existe pas, exécuter d'abord `notebooks/vision/04_transfer_learning.py`.
+    n'existe pas, exécuter d'abord `tps/tp4/04_transfer_learning.py`.
 
     1. quantification d'une couche à la main (numpy), comparée à PyTorch ;
     2. quantification après entraînement (PTQ), effet du jeu de calibration ;

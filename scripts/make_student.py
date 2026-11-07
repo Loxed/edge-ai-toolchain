@@ -5,7 +5,7 @@ décorateur) est un commentaire `# SOLUTION`. Son corps est remplacé par un TOD
 la docstring sont gardées.
 
 Usage (depuis la racine du toolchain) :
-    python scripts/make_student.py                 écrit dans student/notebooks/
+    python scripts/make_student.py                 écrit dans student/tps/
     python scripts/make_student.py --out autre/dir
 """
 
@@ -45,8 +45,8 @@ def strip_solutions(source: str) -> tuple[str, int]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--src", default="notebooks")
-    parser.add_argument("--out", default="student/notebooks")
+    parser.add_argument("--src", default="tps")
+    parser.add_argument("--out", default="student/tps")
     args = parser.parse_args()
     src, out = Path(args.src), Path(args.out)
     for nb in sorted(src.rglob("[0-9]*.py")):

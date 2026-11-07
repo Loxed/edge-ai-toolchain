@@ -39,6 +39,6 @@ def test_strip_solutions_on_sample():
 
 
 def test_real_notebooks_stay_valid_python():
-    for nb in (ROOT / "notebooks").rglob("[0-9]*.py"):
+    for nb in (ROOT / "tps").rglob("[0-9]*.py"):
         out, _ = make_student.strip_solutions(nb.read_text(encoding="utf-8"))
         ast.parse(out)

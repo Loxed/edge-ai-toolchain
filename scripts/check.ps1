@@ -56,7 +56,7 @@ Step "Notebooks"
 $env:MPLBACKEND = "Agg"
 $env:PYTHONIOENCODING = "utf-8"
 # -Filter ne gere pas les plages [0-9] : selection par expression reguliere
-$notebooks = Get-ChildItem -Path (Join-Path $root "notebooks") -Recurse -File -Filter "*.py" |
+$notebooks = Get-ChildItem -Path (Join-Path $root "tps") -Recurse -File -Filter "*.py" |
     Where-Object { $_.Name -match '^\d' -and $_.Name -like "*$Only*" } | Sort-Object Name
 foreach ($nb in $notebooks) {
     $t0 = Get-Date

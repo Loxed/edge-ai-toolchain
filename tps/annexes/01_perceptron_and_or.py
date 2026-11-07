@@ -129,7 +129,7 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.image("notebooks/fundamentals/images/logic-gates.png")
+    mo.image("tps/annexes/images/logic-gates.png")
     return
 
 
